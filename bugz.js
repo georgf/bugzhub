@@ -129,7 +129,7 @@ function filterBugs(bugs, searchParams) {
   return bugs;
 }
 
-async function joinMultipleBugSearches(searchList) {
+this.findBugs = async function(searchList) {
   let buglists = [];
   for (let search of searchList) {
     let bugs = await findBugs(search);
@@ -143,10 +143,6 @@ async function joinMultipleBugSearches(searchList) {
   let joined = [...uniques.values()];
 
   return joined;
-}
-
-this.findBugs = async function(searchList) {
-  return joinMultipleBugSearches(searchList);
 }
 
 return this;
