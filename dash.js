@@ -67,348 +67,41 @@ const tmoBugzillaProjects = [
 ];
 
 let bugLists = new Map([
-    ["commitments (p1)", {
-      category: "active",
-      columns: ["assigned_to", "cf_fx_points", "summary", "whiteboard"],
-      searches: [
-        {
-          searchParams: {
-            whiteboard: "[measurement:client]",
-            priority: "P1",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "assigned_to:" + teamEmails.join(","),
-            priority: "P1",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "product:Toolkit component:Telemetry",
-            priority: "P1",
-            resolution: "---",
-          },
-        },
-        ... tmoGithubProjects.map(p => ({
-          searchParams: {
-            type: "github",
-            user: p.user,
-            project: p.project,
-            filters: {
-              label: "priority:1",
-            },
-          },
-        })),
-      ],
-    }],
-    ["potentials (p2)", {
-      category: "active",
-      columns: ["assigned_to", "cf_fx_points", "summary", "whiteboard"],
-      searches: [
-        {
-          searchParams: {
-            whiteboard: "[measurement:client]",
-            priority: "P2",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "assigned_to:" + teamEmails.join(","),
-            priority: "P2",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "product:Toolkit component:Telemetry",
-            priority: "P2",
-            resolution: "---",
-          },
-        },
-        ... tmoGithubProjects.map(p => ({
-          searchParams: {
-            type: "github",
-            user: p.user,
-            project: p.project,
-            filters: {
-              label: "priority:2",
-            },
-          },
-        })),
-      ],
-    }],
-    ["mentored (wip)", {
-      category: "active",
-      searches: [
-        {
-          searchParams: {
-            resolution: "---",
-            emailtype1: "regexp",
-            email1: teamEmails.join("|"),
-            emailbug_mentor1: "1",
-            emailtype2: "notequals",
-            email2: "nobody@mozilla.org",
-            emailassigned_to2: "1",
-          },
-        },
-      ],
-      columns: ["assigned_to", "summary", "whiteboard"],
-    }],
-    ["tracking", {
-      category: "active",
-      searches: [
-        {
-          searchParams: {
-            resolution: "---",
-            whiteboard: "[measurement:client:tracking]",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "product:Toolkit component:Telemetry whiteboard:[qf",
-            resolution: "---",
-          },
-          customFilter: bug => !bug.whiteboard.includes("[qf-]"),
-        }
-      ],
-      columns: ["assigned_to", "summary", "whiteboard"],
-    }],
-    ["uplifts", {
-      category: "active",
-      searches: [
-        {
-          searchParams: {
-            whiteboard: "[measurement:client:uplift]",
-          },
-        },
-      ],
-      columns: ["assigned_to", "summary"],
-    }],
-    ["project", {
-      category: "active",
-      searches: [
-        {
-          searchParams: {
-            resolution: "---",
-            whiteboard: "[measurement:client:project]",
-          },
-        },
-      ],
-      columns: ["summary"],
-    }],
-    ["backlog, quarter (p3)", {
-      category: "p3",
-      searches: [
-        {
-          searchParams: {
-            whiteboard: "[measurement:client]",
-            priority: "P3",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "assigned_to:" + teamEmails.join(","),
-            priority: "P3",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "product:Toolkit component:Telemetry",
-            priority: "P3",
-            resolution: "---",
-          },
-        },
-      ],
-      columns: ["assigned_to", "summary", "whiteboard"],
-    }],
-    ["backlog, year (p4)", {
-      category: "p4",
-      searches: [
-        {
-          searchParams: {
-            whiteboard: "[measurement:client]",
-            priority: "P4",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "assigned_to:" + teamEmails.join(","),
-            priority: "P4",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "product:Toolkit component:Telemetry",
-            priority: "P4",
-            resolution: "---",
-          },
-        },
-      ],
-      columns: ["assigned_to", "summary", "whiteboard"],
-    }],
-    ["backlog, low priority", {
-      category: "p5",
-      searches: [
-        {
-          searchParams: {
-            whiteboard: "[measurement:client]",
-            priority: "P5",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "assigned_to:" + teamEmails.join(","),
-            priority: "P5",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "product:Toolkit component:Telemetry",
-            priority: "P5",
-            resolution: "---",
-          },
-        },
-      ],
-      columns: ["assigned_to", "summary", "whiteboard"],
-    }],
-    ["mentored (free)", {
-      category: "mentored",
-      searches: [
-        {
-          searchParams: {
-            resolution: "---",
-            emailtype1: "regexp",
-            email1: teamEmails.join("|"),
-            emailbug_mentor1: "1",
-            emailtype2: "equals",
-            email2: "nobody@mozilla.org",
-            emailassigned_to2: "1",
-          },
-        },
-      ],
-      columns: ["summary", "whiteboard"],
-    }],
-    ["mentees", {
-      category: "mentees",
-      searches: [
-        {
-          searchParams: {
-            emailtype1: "regexp",
-            email1: teamEmails.join("|"),
-            emailbug_mentor1: "1",
-            emailtype2: "notequals",
-            email2: "nobody@mozilla.org",
-            emailassigned_to2: "1",
-          },
-          advancedSearch: {
-            lastChangedNDaysAgo: 30,
-          },
-        },
-      ],
-      columns: ["assigned_to", "status", "summary", "whiteboard"],
-    }],
-    ["recent", {
-      category: "recent",
-      searches: [
-        {
-          searchParams: {
-            whiteboard: "[measurement:client]",
-          },
-          advancedSearch: {
-            lastChangedNDaysAgo: 30,
-          },
-        },
-        {
-          searchParams: {
-            quicksearch: "product:Toolkit component:Telemetry",
-          },
-          advancedSearch: {
-            lastChangedNDaysAgo: 30,
-          },
-        },
-      ],
-      columns: ["last_change_time", "assigned_to", "status", "summary"],
-      sortColumn: "last_change_time",
-    }],
-    ["client untriaged", {
-      category: "client_untriaged",
-      searches: [
-        {
-          searchParams: {
-            quicksearch: "product:Toolkit component:Telemetry",
-            priority: "--",
-            resolution: "---",
-          },
-        },
-        {
-          searchParams: {
-            whiteboard: "[measurement:client]",
-            priority: "--",
-            resolution: "---",
-          },
-        },
-      ],
-      columns: ["assigned_to", "summary", "whiteboard"],
-    }],
-    ... ["1", "2", "3", "4"].map(priority => [
-      "tmo p" + priority,
+    ["active", new Map([... [1, 2].map(priority => [
+      "commitments (p" + priority + ")",
       {
-        category: "tmo",
+        columns: ["assignee", "points", "title", "whiteboard"],
         searches: [
           ... tmoGithubProjects.map(p => ({
-            searchParams: {
-              type: "github",
+            github: {
               user: p.user,
               project: p.project,
-              filters: {
-                label: "priority:" + priority,
-              },
             },
-          })),
-          ... tmoBugzillaProjects.map(p => ({
-            searchParams: {
-              quicksearch: `product:"${p.product}" component:"${p.component}"`,
-              priority: "P" + priority,
-              resolution: "---",
+            filters: {
+              priority: priority,
+              open: true,
             },
           })),
         ],
-        columns: ["assigned_to", "summary", "whiteboard", "priority"],
       }
-    ]),
-    ["tmo untriaged", {
-      category: "tmo_untriaged",
-      searches: [
-        ... tmoGithubProjects.map(p => ({
-          searchParams: {
-            type: "github",
-            user: p.user,
-            project: p.project,
-            filters: {
-              noPriority: true,
+    ])])],
+    ["tmo_untriaged", new Map([
+      ["tmo untriaged", {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          ... tmoGithubProjects.map(p => ({
+            github: {
+              user: p.user,
+              project: p.project,
             },
-          },
-        })),
-        ... tmoBugzillaProjects.map(p => ({
-          searchParams: {
-            quicksearch: `product:"${p.product}" component:"${p.component}"`,
-            priority: "--",
-            resolution: "---",
-          },
-        })),
-      ],
-      columns: ["assigned_to", "summary", "whiteboard", "priority"],
-    }],
+            filters: {
+              unprioritized: true,
+              open: true,
+            },
+          })),
+        ],
+      }]
+    ])]
 ]);
 
 var MS_IN_A_DAY = 24 * 60 * 60 * 1000;
@@ -429,6 +122,7 @@ function alias(email) {
     ["kustiuzhanina@mozilla.com", "kate"],
     ["alexrs95@gmail.com", "alejandro"],
     ["nobody@mozilla.org", "-"],
+    [null, "-"],
   ]);
 
   if (shortNames.has(email)) {
@@ -446,7 +140,7 @@ function alias(email) {
 function getBugField(bug, field) {
   let value = bug[field];
   switch (field) {
-    case "assigned_to":
+    case "assignee":
       return alias(value);
     case "whiteboard":
       let strip = [
@@ -456,116 +150,23 @@ function getBugField(bug, field) {
       ];
       strip.forEach(s => value = value.replace(s, ""));
       return value.trim();
-    case "summary":
+    case "title":
       return (value.length <= 100) ? value : (value.substring(0, 100) +  " ...");
+    case "points":
+      return (value !== null) ? value : "-";
+    case "priority":
+      return (value !== null) ? value : "-";
     default: return value;
   }
 }
 
 function niceFieldName(fieldName) {
   let niceNames = new Map([
-    ["assigned_to", "assignee"],
-    ["cf_fx_points", "points"],
+    //["assigned_to", "assignee"],
+    //["cf_fx_points", "points"],
   ]);
 
   return niceNames.get(fieldName) || fieldName;
-}
-
-async function searchGithubProjectForBugs(searchParams) {
-  let issue = gh.getIssues(searchParams.user, searchParams.project);
-  let response = await issue.listIssues({state: "open"});
-
-  let filtered = response.data;
-  if ("filters" in searchParams) {
-    let filters = searchParams.filters;
-
-    if (filters.label) {
-      filtered = filtered.filter(is => {
-        let s = new Set(is.labels.map(l => l.name));
-        if (!s.has(searchParams.filters.label)) {
-          return false;
-        }
-        return true;
-      });
-    }
-
-    if (filters.noPriority) {
-      filtered = filtered.filter(is => {
-        return !is.labels.find(l => l.name.match(/^priority:[0-9]$/));
-      });
-    }
-  }
-
-  let mapped = filtered.map(is => {
-    let assignee = (is.assignee != null) ? is.assignee.login : "nobody@mozilla.org";
-    let priority = "--";
-    let priorityLabel = is.labels.find(l => l.name.match(/^priority:[0-9]$/));
-    if (priorityLabel) {
-      priority = "P" + priorityLabel.name.split(":")[1];
-    }
-
-    return {
-      "id": "gh:" + is.id,
-      "assigned_to": assignee,
-      "cf_fx_points": "---",
-      "summary": is.title,
-      "last_change_time": is.updated_at,
-      "type": "github",
-      "url": is.html_url,
-      "whiteboard": "",
-      "priority": priority,
-    };
-  });
-
-  return mapped;
-}
-
-async function searchBugs(searchParams, advancedSearch = {}, customFilter = null) {
-  if ("lastChangedNDaysAgo" in advancedSearch) {
-    let days = advancedSearch.lastChangedNDaysAgo;
-    let date = futureDate(new Date(), - (days * MS_IN_A_DAY));
-    searchParams.last_change_time = date.toISOString().substring(0, 10);
-  }
-
-  let searchPromise;
-  switch (searchParams.type) {
-  case "github":
-    searchPromise = searchGithubProjectForBugs(searchParams);
-    break;
-  case "bugzilla":
-  default:
-    searchPromise = new Promise((resolve, reject) => {
-      bugzilla.searchBugs(searchParams, (error, bugs) => {
-        if (error) {
-          reject(error);
-        }
-
-        resolve(bugs.map(b => {
-          b.url = "https://bugzilla.mozilla.org/show_bug.cgi?id=" + b.id;
-          b.type = "bugzilla";
-          return b;
-        }));
-      });
-    });
-  }
-
-  let bugs = await searchPromise;
-  if (customFilter) {
-    bugs = bugs.filter(customFilter);
-  }
-
-  return bugs;
-}
-
-function joinMultipleBugSearches(searchList) {
-  let searchPromises = searchList.map(s => searchBugs(s.searchParams, s.advancedSearch, s.customFilter));
-  return Promise.all(searchPromises).then(bugLists => {
-    let bugMaps = bugLists.map(bl => new Map(bl.map(b => [b.id, b])));
-    let uniques = new Map();
-    bugMaps.forEach(bm => uniques = new Map([...uniques, ...bm]));
-    let joined = [...uniques.values()];
-    return joined;
-  });
 }
 
 function removeAllChildNodes(node) {
@@ -609,14 +210,14 @@ function createTableRow(contents) {
 }
 
 function compareBugsByAssignee(a, b) {
-  a = a.assigned_to;
-  b = b.assigned_to;
+  a = a.assignee;
+  b = b.assignee;
 
   if (a == b)
     return 0;
-  if (a == "nobody@mozilla.org")
+  if (a == null)
     return 1;
-  if (b == "nobody@mozilla.org")
+  if (b == null)
     return -1;
 
   return a.localeCompare(b);
@@ -648,7 +249,7 @@ function addBugList(listName, listOptions, bugs) {
   caption.setAttribute("title", "" + bugs.length + " bugs");
   table.appendChild(caption);
 
-  let bugFields = listOptions.columns || ["assigned_to", "status", "summary"];
+  let bugFields = listOptions.columns || ["assignee", "status", "summary"];
   table.appendChild(createTableHeaders([
     "#",
     ...[for (f of bugFields) niceFieldName(f)],
@@ -670,9 +271,9 @@ function update() {
   document.getElementById("overlay").style.display = "block";
   removeAllChildNodes(document.getElementById("content"));
 
-  let shownLists = [...bugLists].filter(bl => bl[1].category == gCategory);
+  let shownLists = [...bugLists.get(gCategory)];
   let searchPromises = shownLists.map(bl => {
-    return joinMultipleBugSearches(bl[1].searches);
+    return bugz.findBugs(bl[1].searches);
   });
 
   Promise.all(searchPromises).then(results => {
@@ -688,7 +289,7 @@ function update() {
 }
 
 function createCategories() {
-  let categories = new Set([for (bl of bugLists) bl[1].category]);
+  let categories = new Set([...bugLists.keys()]);
   let container = document.getElementById("categories");
   let form = document.createElement("form");
 
