@@ -1,0 +1,63 @@
+#overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: #000;
+    opacity: 0.7;
+    filter: alpha(opacity=70);
+}
+
+#loading-anim {
+    width: 220px;
+    height: 19px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: -9px 0 0 -110px;
+}
+
+#notes {
+  font-size: 70%;
+  font-style: italic;
+  margin: 5px;
+  padding: 3px;
+  background-color: #f0f0f0;
+}
+
+#notes ul {
+  margin: 0px;
+  padding: 0px 0px 0px 18px;
+}
+
+#categories {
+  margin: 20px 5px 0px 5px;
+}
+
+#categories form {
+  display: inline;
+}
+
+.buglist {
+  margin-top: 15px;
+}
+
+.buglist table {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
+
+.buglist caption {
+  font-size: 110%;
+  text-align: left;
+  font-weight: bold;
+}
+
+.buglist th, .buglist td {
+  border: 1px solid black;
+}
+
+.buglist td {
+  padding: 2px;
+}
