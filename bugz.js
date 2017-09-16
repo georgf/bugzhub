@@ -66,7 +66,7 @@ class BugzillaBug extends Bug {
 }
 
 async function loadIssuesFromGithubRepo(searchParams) {
-  let issue = gh.getIssues(searchParams.github.user, searchParams.github.project);
+  let issue = gh.getIssues(searchParams.githubRepo.user, searchParams.githubRepo.project);
   let response = await issue.listIssues({state: searchParams.filters.open ? "open" : "closed"});
 
   let mapped = response.data.map(is => {
@@ -105,7 +105,7 @@ async function loadBugsFromBugzilla(searchParams) {
 }
 
 function findBugs(searchParams) {
-  if ("github" in searchParams) {
+  if ("githubRepo" in searchParams) {
     return loadIssuesFromGithubRepo(searchParams);
   }
 

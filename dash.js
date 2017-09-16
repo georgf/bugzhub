@@ -73,7 +73,7 @@ let bugLists = new Map([
         columns: ["assignee", "points", "title", "whiteboard"],
         searches: [
           ... tmoGithubProjects.map(p => ({
-            github: {
+            githubRepo: {
               user: p.user,
               project: p.project,
             },
@@ -90,7 +90,7 @@ let bugLists = new Map([
         columns: ["assignee", "title", "whiteboard"],
         searches: [
           ... tmoGithubProjects.map(p => ({
-            github: {
+            githubRepo: {
               user: p.user,
               project: p.project,
             },
