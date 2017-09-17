@@ -27,6 +27,7 @@ let gCategory;
 const bugzilla = bz.createClient();
 const gh = new GitHub();
 
+// TODO: refactor to team list with email, name, shortname, gh alias.
 let teamEmails = [
   "chutten@mozilla.com",
   "gfritzsche@mozilla.com",
@@ -66,31 +67,74 @@ const tmoBugzillaProjects = [
   },
 ];
 
+const telemetryBugzillaProjects = [
+  {
+    product: "Toolkit",
+    component: "Telemetry",
+  }
+];
+
 let bugLists = new Map([
-    ["active", new Map([... [1, 2].map(priority => [
-      "commitments (p" + priority + ")",
-      {
-        columns: ["assignee", "points", "title", "whiteboard"],
-        searches: [
-          ... tmoGithubProjects.map(p => ({
-            githubRepo: {
-              user: p.user,
-              project: p.project,
-            },
-            filters: {
-              priority: priority,
-              open: true,
-            },
-          })),
-        ],
-      }
-    ])])],
+    ["active", new Map([
+      ... [1, 2].map(priority => [
+        "commitments (p" + priority + ")",
+        {
+          columns: ["assignee", "points", "title", "whiteboard"],
+          searches: [
+            ... tmoGithubProjects.map(p => ({
+              search: {
+                type: "githubRepo",
+                user: p.user,
+                project: p.project,
+              },
+              filters: {
+                priority: priority,
+                open: true,
+              },
+            })),
+            ... tmoBugzillaProjects.map(p => ({
+              search: {
+                type: "bugzillaComponent",
+                product: p.product,
+                component: p.component,
+              },
+              filters: {
+                priority: priority,
+                open: true,
+              },
+            })),
+            ... telemetryBugzillaProjects.map(p => ({
+              search: {
+                type: "bugzillaComponent",
+                product: p.product,
+                component: p.component,
+              },
+              filters: {
+                priority: priority,
+                open: true,
+              },
+            })),
+            {
+              search: {
+                type: "bugzillaAssignees",
+                assignees: teamEmails,
+              },
+              filters: {
+                priority: priority,
+                open: true,
+              },
+            }
+          ],
+        }
+      ]),
+    ])],
     ["tmo_untriaged", new Map([
       ["tmo untriaged", {
         columns: ["assignee", "title", "whiteboard"],
         searches: [
           ... tmoGithubProjects.map(p => ({
-            githubRepo: {
+            search: {
+              type: "githubRepo",
               user: p.user,
               project: p.project,
             },
@@ -101,7 +145,11 @@ let bugLists = new Map([
           })),
         ],
       }]
-    ])]
+    ])],
+    // TODO:
+    // - query for BMO bugs per component, triaged & untriaged
+    // - query for BMO bugs assigned to team in all components
+    // - query for BMO mentored bugs by team mentors in all components
 ]);
 
 var MS_IN_A_DAY = 24 * 60 * 60 * 1000;

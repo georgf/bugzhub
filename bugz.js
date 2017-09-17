@@ -66,8 +66,13 @@ class BugzillaBug extends Bug {
 }
 
 async function loadIssuesFromGithubRepo(searchParams) {
-  let issue = gh.getIssues(searchParams.githubRepo.user, searchParams.githubRepo.project);
-  let response = await issue.listIssues({state: searchParams.filters.open ? "open" : "closed"});
+  let {search, filters} = searchParams;
+
+  let projectIssues = gh.getIssues(search.user, search.project);
+  let queryParams = {
+    state: (filters && filters.open) ? "open" : "closed",
+  };
+  let response = await projectIssues.listIssues(queryParams);
 
   let mapped = response.data.map(is => {
     let data = {
@@ -101,24 +106,100 @@ async function loadIssuesFromGithubRepo(searchParams) {
 }
 
 async function loadBugsFromBugzilla(searchParams) {
+  console.log("loadBugsFromBugzilla() - searchParams:", searchParams);
+  let {search, filters} = searchParams;
+  let queryParams = {};
 
+  // Set up basic search type.
+  switch (search.type) {
+  case "bugzillaComponent":
+    queryParams.quicksearch = `product:"${search.product}" component:"${search.component}"`;
+    break;
+  case "bugzillaAssignees":
+    let bzc = searchParams.bugzillaComponent;
+    queryParams.quicksearch = `assigned_to:"${search.assignees.join(',')}"`;
+    break;
+  default:
+    throw new Error("Oops... unsupported query type.");
+  }
+
+  // Add query-time filters.
+  if (filters) {
+    if ("priority" in filters) {
+      queryParams.priority = "P" + filters.priority;
+    }
+    if ("open" in filters) {
+      if (filters.open) {
+        queryParams.resolution = "---";
+      }
+    }
+  }
+
+  console.log("loadBugsFromBugzilla() - queryParams:", queryParams);
+  let bugs = await new Promise((resolve, reject) => {
+    bugzilla.searchBugs(queryParams, (error, bugs) => {
+      if (error) {
+        reject(error);
+        return;
+      }
+
+      resolve(bugs);
+    });
+  });
+  console.log("loadBugsFromBugzilla() - bugzilla result:", bugs);
+
+  let mapped = bugs.map(b => {
+    let data = {
+      id: "bz:" + b.id,
+      assignee: null,
+      points: null,
+      title: b.summary,
+      lastChangeDate: null,
+      url: "https://bugzilla.mozilla.org/show_bug.cgi?id=" + b.id,
+      whiteboard: b.whiteboard,
+      priority: null,
+      labels: null,
+    };
+
+    if (b.assigned_to !== "nobody@mozilla.org") {
+      data.assignee = b.assigned_to;
+    }
+
+    if (b.cf_fx_points !== "---") {
+      data.points = parseInt(b.cf_fx_points, 10);
+    }
+
+    if (b.priority !== "--") {
+      data.priority = parseInt(b.priority.substring(1), 10);
+    }
+
+    return new BugzillaBug(data);
+  });
+
+  return mapped;
 }
 
 function findBugs(searchParams) {
-  if ("githubRepo" in searchParams) {
-    return loadIssuesFromGithubRepo(searchParams);
+  let queryWords = new Map([
+    ["githubRepo", loadIssuesFromGithubRepo],
+    ["bugzillaComponent", loadBugsFromBugzilla],
+    ["bugzillaAssignees", loadBugsFromBugzilla],
+  ]);
+
+  let {search} = searchParams;
+  if (!search || !(queryWords.has(search.type))) {
+    throw new Error("Oops ... unsupported bug search type.");
   }
 
-  // TODO: loadBugsFromBugzilla ...
-  throw new Error("oops ...");
+  return queryWords.get(search.type)(searchParams);
 }
 
 function filterBugs(bugs, searchParams) {
-  if (!("filters" in searchParams)) {
+  let {filters} = searchParams;
+  if (!filters) {
     return bugs;
   }
 
-  let filters = searchParams.filters;
   if ("unprioritized" in filters) {
     bugs = bugs.filter(b => b.priority === null);
   }
