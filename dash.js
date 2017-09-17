@@ -75,219 +75,18 @@ const telemetryBugzillaProjects = [
 ];
 
 let bugLists = new Map([
-    // TODO:
-    // - query recent bugs as "recent".
-    // - query recent mentored bugs as "mentees".
+  // TODO:
+  // - query recent bugs as "recent".
+  // - query recent mentored bugs as "mentees".
 
-    /**************************************************************************
-     * Currently active bugs for client team.
-     *************************************************************************/
-    ["active", new Map([
-      ... [1, 2].map(priority => [
-        "commitments (p" + priority + ")",
-        {
-          columns: ["assignee", "points", "title", "whiteboard"],
-          searches: [
-            ... tmoGithubProjects.map(p => ({
-              search: {
-                type: "githubRepo",
-                user: p.user,
-                project: p.project,
-              },
-              filters: {
-                priority: priority,
-                open: true,
-              },
-            })),
-            ... tmoBugzillaProjects.map(p => ({
-              search: {
-                type: "bugzillaComponent",
-                product: p.product,
-                component: p.component,
-              },
-              filters: {
-                priority: priority,
-                open: true,
-              },
-            })),
-            ... telemetryBugzillaProjects.map(p => ({
-              search: {
-                type: "bugzillaComponent",
-                product: p.product,
-                component: p.component,
-              },
-              filters: {
-                priority: priority,
-                open: true,
-              },
-            })),
-            {
-              search: {
-                type: "bugzillaAssignees",
-                assignees: teamEmails,
-              },
-              filters: {
-                priority: priority,
-                open: true,
-              },
-            }
-          ],
-        }
-      ]),
-      ["mentored wip", {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaMentors",
-              mentors: teamEmails,
-            },
-            filters: {
-              open: true,
-              isAssigned: true,
-            },
-          },
-        ],
-      }],
-      ["tracking", {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaWhiteboard",
-              whiteboardContent: "[measurement:client:tracking]",
-            },
-            filters: {
-              open: true,
-            },
-          },
-          ... telemetryBugzillaProjects.map(p => ({
-            search: {
-              type: "bugzillaComponent",
-              product: p.product,
-              component: p.component,
-            },
-            filters: {
-              open: true,
-              customFilter: bug => bug.whiteboard.includes("[qf") && !bug.whiteboard.includes("[qf-]"),
-            },
-          })),
-        ],
-      }],
-      ["projects", {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaWhiteboard",
-              whiteboardContent: "[measurement:client:project]",
-            },
-            filters: {
-              open: true,
-            },
-          },
-        ],
-      }],
-    ])],
-
-    /**************************************************************************
-     * p3, p4, p5 categories for client team.
-     *************************************************************************/
-    ... [3, 4, 5].map(priority => ["p" + priority, new Map([
-      ["p" + priority, {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: telemetryBugzillaProjects.map(p => ({
-          search: {
-            type: "bugzillaComponent",
-            product: p.product,
-            component: p.component,
-          },
-          filters: {
-            priority: priority,
-            open: true,
-          },
-        })),
-      }],
-    ])]),
-
-    /**************************************************************************
-     * Mentored bugs for client team.
-     *************************************************************************/
-    ["mentored", new Map([
-      ["mentored wip", {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaMentors",
-              mentors: teamEmails,
-            },
-            filters: {
-              open: true,
-              isAssigned: true,
-            },
-          },
-        ],
-      }],
-      ["mentored free", {
-        columns: ["title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaMentors",
-              mentors: teamEmails,
-            },
-            filters: {
-              open: true,
-              isAssigned: false,
-            },
-          },
-        ],
-      }],
-    ])],
-
-    /**************************************************************************
-     * Triaged bugs for TMO team.
-     *************************************************************************/
-    ["tmo_triaged", new Map([
-      ... ["1", "2", "3", "4"].map(priority => [
-        "tmo p" + priority,
-        {
-          columns: ["assignee", "title", "whiteboard", "priority"],
-          searches: [
-            ... tmoGithubProjects.map(p => ({
-              search: {
-                type: "githubRepo",
-                user: p.user,
-                project: p.project,
-              },
-              filters: {
-                priority: priority,
-                open: true,
-              },
-            })),
-            ... tmoBugzillaProjects.map(p => ({
-              search: {
-                type: "bugzillaComponent",
-                product: p.product,
-                component: p.component,
-              },
-              filters: {
-                priority: priority,
-                open: true,
-              },
-            })),
-          ],
-        },
-      ]),
-    ])],
-
-    /**************************************************************************
-     * Untriaged bugs for TMO team.
-     *************************************************************************/
-    ["tmo_untriaged", new Map([
-      ["tmo untriaged", {
-        columns: ["assignee", "title", "whiteboard"],
+  /**************************************************************************
+   * Currently active bugs for client team.
+   *************************************************************************/
+  ["active", new Map([
+    ... [1, 2].map(priority => [
+      "commitments (p" + priority + ")",
+      {
+        columns: ["assignee", "points", "title", "whiteboard"],
         searches: [
           ... tmoGithubProjects.map(p => ({
             search: {
@@ -296,13 +95,214 @@ let bugLists = new Map([
               project: p.project,
             },
             filters: {
-              unprioritized: true,
+              priority: priority,
+              open: true,
+            },
+          })),
+          ... tmoBugzillaProjects.map(p => ({
+            search: {
+              type: "bugzillaComponent",
+              product: p.product,
+              component: p.component,
+            },
+            filters: {
+              priority: priority,
+              open: true,
+            },
+          })),
+          ... telemetryBugzillaProjects.map(p => ({
+            search: {
+              type: "bugzillaComponent",
+              product: p.product,
+              component: p.component,
+            },
+            filters: {
+              priority: priority,
+              open: true,
+            },
+          })),
+          {
+            search: {
+              type: "bugzillaAssignees",
+              assignees: teamEmails,
+            },
+            filters: {
+              priority: priority,
+              open: true,
+            },
+          }
+        ],
+      }
+    ]),
+    ["mentored wip", {
+      columns: ["assignee", "title", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaMentors",
+            mentors: teamEmails,
+          },
+          filters: {
+            open: true,
+            isAssigned: true,
+          },
+        },
+      ],
+    }],
+    ["tracking", {
+      columns: ["assignee", "title", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaWhiteboard",
+            whiteboardContent: "[measurement:client:tracking]",
+          },
+          filters: {
+            open: true,
+          },
+        },
+        ... telemetryBugzillaProjects.map(p => ({
+          search: {
+            type: "bugzillaComponent",
+            product: p.product,
+            component: p.component,
+          },
+          filters: {
+            open: true,
+            customFilter: bug => bug.whiteboard.includes("[qf") && !bug.whiteboard.includes("[qf-]"),
+          },
+        })),
+      ],
+    }],
+    ["projects", {
+      columns: ["assignee", "title", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaWhiteboard",
+            whiteboardContent: "[measurement:client:project]",
+          },
+          filters: {
+            open: true,
+          },
+        },
+      ],
+    }],
+  ])],
+
+  /**************************************************************************
+   * p3, p4, p5 categories for client team.
+   *************************************************************************/
+  ... [3, 4, 5].map(priority => ["p" + priority, new Map([
+    ["p" + priority, {
+      columns: ["assignee", "title", "whiteboard"],
+      searches: telemetryBugzillaProjects.map(p => ({
+        search: {
+          type: "bugzillaComponent",
+          product: p.product,
+          component: p.component,
+        },
+        filters: {
+          priority: priority,
+          open: true,
+        },
+      })),
+    }],
+  ])]),
+
+  /**************************************************************************
+   * Mentored bugs for client team.
+   *************************************************************************/
+  ["mentored", new Map([
+    ["mentored wip", {
+      columns: ["assignee", "title", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaMentors",
+            mentors: teamEmails,
+          },
+          filters: {
+            open: true,
+            isAssigned: true,
+          },
+        },
+      ],
+    }],
+    ["mentored free", {
+      columns: ["title", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaMentors",
+            mentors: teamEmails,
+          },
+          filters: {
+            open: true,
+            isAssigned: false,
+          },
+        },
+      ],
+    }],
+  ])],
+
+  /**************************************************************************
+   * Triaged bugs for TMO team.
+   *************************************************************************/
+  ["tmo_triaged", new Map([
+    ... ["1", "2", "3", "4"].map(priority => [
+      "tmo p" + priority,
+      {
+        columns: ["assignee", "title", "whiteboard", "priority"],
+        searches: [
+          ... tmoGithubProjects.map(p => ({
+            search: {
+              type: "githubRepo",
+              user: p.user,
+              project: p.project,
+            },
+            filters: {
+              priority: priority,
+              open: true,
+            },
+          })),
+          ... tmoBugzillaProjects.map(p => ({
+            search: {
+              type: "bugzillaComponent",
+              product: p.product,
+              component: p.component,
+            },
+            filters: {
+              priority: priority,
               open: true,
             },
           })),
         ],
-      }]
-    ])],
+      },
+    ]),
+  ])],
+
+  /**************************************************************************
+   * Untriaged bugs for TMO team.
+   *************************************************************************/
+  ["tmo_untriaged", new Map([
+    ["tmo untriaged", {
+      columns: ["assignee", "title", "whiteboard"],
+      searches: [
+        ... tmoGithubProjects.map(p => ({
+          search: {
+            type: "githubRepo",
+            user: p.user,
+            project: p.project,
+          },
+          filters: {
+            unprioritized: true,
+            open: true,
+          },
+        })),
+      ],
+    }]
+  ])],
 ]);
 
 var MS_IN_A_DAY = 24 * 60 * 60 * 1000;
