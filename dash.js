@@ -182,6 +182,39 @@ let bugLists = new Map([
         ],
       }],
     ])],
+    ["tmo_triaged", new Map([
+      ... ["1", "2", "3", "4"].map(priority => [
+        "tmo p" + priority,
+        {
+          category: "tmo",
+          searches: [
+            ... tmoGithubProjects.map(p => ({
+              search: {
+                type: "githubRepo",
+                user: p.user,
+                project: p.project,
+              },
+              filters: {
+                priority: priority,
+                open: true,
+              },
+            })),
+            ... tmoBugzillaProjects.map(p => ({
+              search: {
+                type: "bugzillaComponent",
+                product: p.product,
+                component: p.component,
+              },
+              filters: {
+                priority: priority,
+                open: true,
+              },
+            })),
+          ],
+          columns: ["assignee", "title", "whiteboard", "priority"],
+        },
+      ]),
+    ])],
     ["tmo_untriaged", new Map([
       ["tmo untriaged", {
         columns: ["assignee", "title", "whiteboard"],
