@@ -127,6 +127,60 @@ let bugLists = new Map([
           ],
         }
       ]),
+      ["mentored wip", {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaMentors",
+              mentors: teamEmails,
+            },
+            filters: {
+              open: true,
+              isAssigned: true,
+            },
+          },
+        ],
+      }],
+      ["tracking", {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaWhiteboard",
+              whiteboardContent: "[measurement:client:tracking]",
+            },
+            filters: {
+              open: true,
+            },
+          },
+          ... telemetryBugzillaProjects.map(p => ({
+            search: {
+              type: "bugzillaComponent",
+              product: p.product,
+              component: p.component,
+            },
+            filters: {
+              open: true,
+              customFilter: bug => bug.whiteboard.includes("[qf") && !bug.whiteboard.includes("[qf-]"),
+            },
+          })),
+        ],
+      }],
+      ["projects", {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaWhiteboard",
+              whiteboardContent: "[measurement:client:project]",
+            },
+            filters: {
+              open: true,
+            },
+          },
+        ],
+      }],
     ])],
     ["tmo_untriaged", new Map([
       ["tmo untriaged", {

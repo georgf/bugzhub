@@ -116,8 +116,16 @@ async function loadBugsFromBugzilla(searchParams) {
     queryParams.quicksearch = `product:"${search.product}" component:"${search.component}"`;
     break;
   case "bugzillaAssignees":
-    let bzc = searchParams.bugzillaComponent;
     queryParams.quicksearch = `assigned_to:"${search.assignees.join(',')}"`;
+    break;
+  case "bugzillaMentors":
+    //queryParams.quicksearch = `mentor:"${search.mentors.join(',')}"`;
+    queryParams.emailtype1 = "regexp";
+    queryParams.email1 = teamEmails.join("|");
+    queryParams.emailbug_mentor1 = "1";
+    break;
+  case "bugzillaWhiteboard":
+    queryParams.quicksearch = `whiteboard:"${search.whiteboardContent}"`;
     break;
   default:
     throw new Error("Oops... unsupported query type.");
@@ -132,6 +140,11 @@ async function loadBugsFromBugzilla(searchParams) {
       if (filters.open) {
         queryParams.resolution = "---";
       }
+    }
+    if ("isAssigned" in filters) {
+      queryParams.emailtype2 = "notequals";
+      queryParams.email2 = "nobody@mozilla.org";
+      queryParams.emailassigned_to2 = "1";
     }
   }
 
@@ -184,6 +197,8 @@ function findBugs(searchParams) {
     ["githubRepo", loadIssuesFromGithubRepo],
     ["bugzillaComponent", loadBugsFromBugzilla],
     ["bugzillaAssignees", loadBugsFromBugzilla],
+    ["bugzillaMentors", loadBugsFromBugzilla],
+    ["bugzillaWhiteboard", loadBugsFromBugzilla],
   ]);
 
   let {search} = searchParams;
@@ -205,6 +220,9 @@ function filterBugs(bugs, searchParams) {
   }
   if ("priority" in filters) {
     bugs = bugs.filter(b => String(b.priority) === String(filters.priority));
+  }
+  if ("customFilter" in filters) {
+    bugs = bugs.filter(b => filters.customFilter(b));
   }
 
   return bugs;
