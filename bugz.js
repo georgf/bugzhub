@@ -142,7 +142,7 @@ async function loadBugsFromBugzilla(searchParams) {
       }
     }
     if ("isAssigned" in filters) {
-      queryParams.emailtype2 = "notequals";
+      queryParams.emailtype2 = filters.isAssigned ? "notequals" : "equals";
       queryParams.email2 = "nobody@mozilla.org";
       queryParams.emailassigned_to2 = "1";
     }
