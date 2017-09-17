@@ -18,6 +18,17 @@
     margin: -9px 0 0 -110px;
 }
 
+h1 {
+  font-size: 160%;
+  color: #101010;
+}
+
+#gh_note {
+  font-size: 80%;
+  margin-top: 0px;
+  padding-top: 0px;
+}
+
 #notes {
   font-size: 70%;
   font-style: italic;
