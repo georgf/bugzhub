@@ -44,6 +44,10 @@ class Bug {
   get points() {
     return this._data.points;
   }
+
+  get project() {
+    return "";
+  }
 }
 
 class GithubIssue extends Bug {
@@ -52,6 +56,10 @@ class GithubIssue extends Bug {
       .filter(l => !l.match(/^priority:[0-9]$/))
       .map(l => "[" + l + "]")
       .join(" ");
+  }
+
+  get project() {
+    return this._data.project;
   }
 }
 
@@ -62,6 +70,10 @@ class BugzillaBug extends Bug {
 
   get isAssigned() {
     return this._data.assignee !== "nobody@mozilla.org";
+  }
+
+  get project() {
+    return this._data.component;
   }
 }
 
@@ -85,6 +97,7 @@ async function loadIssuesFromGithubRepo(searchParams) {
       whiteboard: null,
       priority: null,
       labels: null,
+      project: search.project,
     };
 
     if (is.assignee) {
@@ -172,6 +185,8 @@ async function loadBugsFromBugzilla(searchParams) {
       whiteboard: b.whiteboard,
       priority: null,
       labels: null,
+      product: b.product,
+      component: b.component,
     };
 
     if (b.assigned_to !== "nobody@mozilla.org") {

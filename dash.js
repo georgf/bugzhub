@@ -253,7 +253,7 @@ let bugLists = new Map([
     ... ["1", "2", "3", "4"].map(priority => [
       "tmo p" + priority,
       {
-        columns: ["assignee", "title", "whiteboard", "priority"],
+        columns: ["assignee", "title", "project", "whiteboard"],
         searches: [
           ... tmoGithubProjects.map(p => ({
             search: {
