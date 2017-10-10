@@ -119,7 +119,6 @@ async function loadIssuesFromGithubRepo(searchParams) {
 }
 
 async function loadBugsFromBugzilla(searchParams) {
-  console.log("loadBugsFromBugzilla() - searchParams:", searchParams);
   let {search, filters} = searchParams;
   let queryParams = {};
 
@@ -161,7 +160,6 @@ async function loadBugsFromBugzilla(searchParams) {
     }
   }
 
-  console.log("loadBugsFromBugzilla() - queryParams:", queryParams);
   let bugs = await new Promise((resolve, reject) => {
     bugzilla.searchBugs(queryParams, (error, bugs) => {
       if (error) {
@@ -172,7 +170,6 @@ async function loadBugsFromBugzilla(searchParams) {
       resolve(bugs);
     });
   });
-  console.log("loadBugsFromBugzilla() - bugzilla result:", bugs);
 
   let mapped = bugs.map(b => {
     let data = {
