@@ -86,7 +86,7 @@ let bugLists = new Map([
     ... [1, 2].map(priority => [
       "commitments (p" + priority + ")",
       {
-        columns: ["assignee", "points", "title", "whiteboard"],
+        columns: ["assignee", "points", "title", "project", "whiteboard"],
         searches: [
           ... tmoGithubProjects.map(p => ({
             search: {
@@ -135,7 +135,7 @@ let bugLists = new Map([
       }
     ]),
     ["mentored wip", {
-      columns: ["assignee", "title", "whiteboard"],
+      columns: ["assignee", "title", "project", "whiteboard"],
       searches: [
         {
           search: {
@@ -150,7 +150,7 @@ let bugLists = new Map([
       ],
     }],
     ["tracking", {
-      columns: ["assignee", "title", "whiteboard"],
+      columns: ["assignee", "title", "project", "whiteboard"],
       searches: [
         {
           search: {
@@ -175,7 +175,7 @@ let bugLists = new Map([
       ],
     }],
     ["projects", {
-      columns: ["assignee", "title", "whiteboard"],
+      columns: ["assignee", "title", "project", "whiteboard"],
       searches: [
         {
           search: {
