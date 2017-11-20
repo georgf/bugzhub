@@ -520,14 +520,14 @@ function addBugList(listName, listOptions, bugs) {
   let bugFields = listOptions.columns || ["assignee", "status", "summary"];
   table.appendChild(createTableHeaders([
     "#",
-    ...[for (f of bugFields) niceFieldName(f)],
+    ...bugFields.map(f => niceFieldName(f)),
   ]));
 
   for (let bug of bugs) {
     let url = bug.url;
     table.appendChild(createTableRow([
       (cell) => cell.appendChild(createLink("#", url)),
-      ...[for (f of bugFields) getBugField(bug, f)],
+      ...bugFields.map(f => getBugField(bug, f)),
     ]));
   }
 
