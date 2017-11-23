@@ -128,7 +128,7 @@ async function loadBugsFromBugzilla(searchParams) {
     queryParams.quicksearch = `product:"${search.product}" component:"${search.component}"`;
     break;
   case "bugzillaAssignees":
-    queryParams.quicksearch = `assigned_to:"${search.assignees.join(',')}"`;
+    queryParams.quicksearch = `assigned_to:${search.assignees.join(',')}`;
     break;
   case "bugzillaMentors":
     //queryParams.quicksearch = `mentor:"${search.mentors.join(',')}"`;
