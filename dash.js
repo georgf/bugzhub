@@ -74,6 +74,13 @@ const telemetryBugzillaProjects = [
   }
 ];
 
+const telemetryGithubProjects = [
+  {
+    user: "mozilla",
+    project: "fhr-jelly",
+  }
+];
+
 let bugLists = new Map([
   // TODO:
   // - query recent bugs as "recent".
@@ -114,6 +121,17 @@ let bugLists = new Map([
               type: "bugzillaComponent",
               product: p.product,
               component: p.component,
+            },
+            filters: {
+              priority: 1,
+              open: true,
+            },
+          })),
+          ... telemetryGithubProjects.map(p => ({
+            search: {
+              type: "githubRepo",
+              user: p.user,
+              project: p.project,
             },
             filters: {
               priority: 1,
