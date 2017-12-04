@@ -50,6 +50,10 @@ const tmoGithubProjects = [
     user: "mozilla",
     project: "telemetry-dashboard",
   },
+  {
+    user: "georgf",
+    project: "fx-data-explorer",
+  },
 ];
 
 const tmoBugzillaProjects = [
