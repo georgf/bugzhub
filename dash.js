@@ -365,7 +365,7 @@ let bugLists = new Map([
    *************************************************************************/
   ["tmo_untriaged", new Map([
     ["tmo untriaged", {
-      columns: ["assignee", "title", "whiteboard"],
+      columns: ["assignee", "title", "project", "whiteboard"],
       searches: [
         ... tmoGithubProjects.map(p => ({
           search: {
