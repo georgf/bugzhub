@@ -329,6 +329,40 @@ let bugLists = new Map([
   ])],
 
   /**************************************************************************
+   * Untriaged bugs for client team.
+   *************************************************************************/
+  ["untriaged", new Map([
+    ["untriaged, telemetry",
+      {
+        columns: ["assignee", "title", "project", "whiteboard"],
+        searches: [
+          ... telemetryBugzillaProjects.map(p => ({
+            search: {
+              type: "bugzillaComponent",
+              product: p.product,
+              component: p.component,
+            },
+            filters: {
+              unprioritized: true,
+              open: true,
+            },
+          })),
+          {
+            search: {
+              type: "bugzillaAssignees",
+              assignees: teamEmails,
+            },
+            filters: {
+              unprioritized: true,
+              open: true,
+            },
+          }
+        ],
+      }
+    ],
+  ])],
+
+  /**************************************************************************
    * Triaged bugs for TMO team.
    *************************************************************************/
   ["tmo_triaged", new Map([
