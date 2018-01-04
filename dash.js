@@ -51,8 +51,8 @@ const tmoGithubProjects = [
     project: "telemetry-dashboard",
   },
   {
-    user: "georgf",
-    project: "fx-data-explorer",
+    user: "mozilla",
+    project: "probe-dictionary",
   },
   {
     user: "mozilla",
