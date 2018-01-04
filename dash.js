@@ -334,7 +334,7 @@ let bugLists = new Map([
   ["untriaged", new Map([
     ["untriaged, telemetry",
       {
-        columns: ["assignee", "title", "project", "whiteboard"],
+        columns: ["index", "assignee", "title", "project", "whiteboard"],
         searches: [
           ... telemetryBugzillaProjects.map(p => ({
             search: {
@@ -403,7 +403,7 @@ let bugLists = new Map([
    *************************************************************************/
   ["tmo_untriaged", new Map([
     ["tmo untriaged", {
-      columns: ["assignee", "title", "project", "whiteboard"],
+      columns: ["index", "assignee", "title", "project", "whiteboard"],
       searches: [
         ... tmoGithubProjects.map(p => ({
           search: {
@@ -465,7 +465,7 @@ function alias(email) {
   return email;
 }
 
-function getBugField(bug, field) {
+function getBugField(bug, field, index=0) {
   let value = bug[field];
   switch (field) {
     case "assignee":
@@ -484,7 +484,10 @@ function getBugField(bug, field) {
       return (value !== null) ? value : "-";
     case "priority":
       return (value !== null) ? value : "-";
-    default: return value;
+    case "index":
+      return index;
+    default:
+      return value;
   }
 }
 
@@ -583,11 +586,12 @@ function addBugList(listName, listOptions, bugs) {
     ...bugFields.map(f => niceFieldName(f)),
   ]));
 
-  for (let bug of bugs) {
+  for (let i = 0; i < bugs.length; ++i) {
+    let bug = bugs[i];
     let url = bug.url;
     table.appendChild(createTableRow([
       (cell) => cell.appendChild(createLink("#", url)),
-      ...bugFields.map(f => getBugField(bug, f)),
+      ...bugFields.map(f => getBugField(bug, f, i + 1)),
     ]));
   }
 
