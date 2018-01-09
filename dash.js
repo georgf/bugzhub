@@ -334,7 +334,7 @@ let bugLists = new Map([
   ["untriaged", new Map([
     ["untriaged, telemetry",
       {
-        columns: ["index", "assignee", "title", "project", "whiteboard"],
+        columns: ["assignee", "title", "project", "whiteboard"],
         searches: [
           ... telemetryBugzillaProjects.map(p => ({
             search: {
@@ -403,7 +403,7 @@ let bugLists = new Map([
    *************************************************************************/
   ["tmo_untriaged", new Map([
     ["tmo untriaged", {
-      columns: ["index", "assignee", "title", "project", "whiteboard"],
+      columns: ["assignee", "title", "project", "whiteboard"],
       searches: [
         ... tmoGithubProjects.map(p => ({
           search: {
@@ -590,7 +590,7 @@ function addBugList(listName, listOptions, bugs) {
     let bug = bugs[i];
     let url = bug.url;
     table.appendChild(createTableRow([
-      (cell) => cell.appendChild(createLink("#", url)),
+      (cell) => cell.appendChild(createLink(String(i + 1), url)),
       ...bugFields.map(f => getBugField(bug, f, i + 1)),
     ]));
   }
