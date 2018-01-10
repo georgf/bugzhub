@@ -61,11 +61,13 @@ h1 {
   border-style: solid;
   border-color: #909090;
   color: #505050;
+  cursor: pointer;
 }
 
 #categories label.active {
   border-width: 1px 1px 0px 1px;
   color: black;
+  cursor: default;
 }
 
 .buglist {
