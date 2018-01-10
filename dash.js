@@ -465,19 +465,41 @@ function alias(email) {
   return email;
 }
 
+function getWhiteboardHtml(value) {
+  let strip = [
+    "[measurement:client]",
+    "[measurement:client:tracking]",
+    "[measurement:client:uplift]",
+  ];
+  strip.forEach(s => value = value.replace(s, ""));
+  value = value.trim();
+
+  let reTag = /\[[^\]]+\]/gi;
+  let tags = [];
+  let m;
+  while (m = reTag.exec(value)) {
+    tags.push(m[0].replace(/[\[\]]/g, ""));
+  }
+
+  let elems = tags.map(tag => {
+    let span = document.createElement("span");
+    span.classList.add("tag");
+    span.appendChild(document.createTextNode(tag));
+    return span;
+  });
+
+  elems.push(document.createTextNode(value.replace(reTag, "")));
+
+  return elems;
+}
+
 function getBugField(bug, field, index=0) {
   let value = bug[field];
   switch (field) {
     case "assignee":
       return alias(value);
     case "whiteboard":
-      let strip = [
-        "[measurement:client]",
-        "[measurement:client:tracking]",
-        "[measurement:client:uplift]",
-      ];
-      strip.forEach(s => value = value.replace(s, ""));
-      return value.trim();
+      return getWhiteboardHtml(value);
     case "title":
       return (value.length <= 100) ? value : (value.substring(0, 100) +  " ...");
     case "points":
@@ -531,6 +553,10 @@ function createTableRow(contents) {
     let cell = document.createElement("td");
     if (typeof(content) === "function") {
       content(cell);
+    } else if (Array.isArray(content)) {
+      for (let e of content) {
+        cell.appendChild(e);
+      }
     } else {
       cell.appendChild(document.createTextNode(content));
     }
@@ -636,13 +662,25 @@ function createCategories() {
     radio.checked = (title === gCategory);
     radio.addEventListener("change", (evt) => {
       gCategory = evt.target.value;
-      window.location = "#" + evt.target.value;
+      window.location = "#" + gCategory;
+      for (let el of document.getElementsByClassName("nav-category")) {
+        if (el.id == ("nav-category-" + gCategory)) {
+          el.classList.add("active");
+        } else {
+          el.classList.remove("active");
+        }
+      }
       update();
     }, false);
 
     let label = document.createElement("label");
     label.appendChild(radio);
     label.appendChild(document.createTextNode(title));
+    label.classList.add("nav-category");
+    if (title == gCategory) {
+      label.classList.add("active");
+    }
+    label.id = "nav-category-" + title;
 
     form.appendChild(label);
   }

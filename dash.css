@@ -43,11 +43,29 @@ h1 {
 }
 
 #categories {
-  margin: 20px 5px 0px 5px;
+  margin: 25px 5px 25px 0px;
 }
 
 #categories form {
   display: inline;
+}
+
+#categories input {
+  display: none;
+}
+
+#categories label {
+  margin: 0px;
+  padding: 7px 10px 5px 10px;
+  border-width: 0px 0px 1px 0px;
+  border-style: solid;
+  border-color: #909090;
+  color: #505050;
+}
+
+#categories label.active {
+  border-width: 1px 1px 0px 1px;
+  color: black;
 }
 
 .buglist {
@@ -55,20 +73,40 @@ h1 {
 }
 
 .buglist table {
-  border: 1px solid black;
   border-collapse: collapse;
+  border-spacing: 3px;
 }
 
 .buglist caption {
   font-size: 110%;
   text-align: left;
   font-weight: bold;
+  color: #505050;
 }
 
 .buglist th, .buglist td {
-  border: 1px solid black;
+  background-color: #F5F5F5;
+  padding: 5px;
+  border: solid 2px white;
+}
+
+.buglist th {
+  color: #505050;
 }
 
 .buglist td {
   padding: 2px;
+}
+
+.buglist tr:hover > td {
+  background-color: #E5E5E5;
+}
+
+span.tag {
+  background-color: #e9e9e9;
+  color: #505050;
+  margin: 1px;
+  padding: 3px;
+  border-radius: 4px;
+  font-size: 90%;
 }
