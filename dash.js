@@ -450,7 +450,7 @@ function alias(email) {
     ["kustiuzhanina@mozilla.com", "kate"],
     ["alexrs95@gmail.com", "alejandro"],
     ["nobody@mozilla.org", "-"],
-    [null, "-"],
+    [null, ""],
   ]);
 
   if (shortNames.has(email)) {
@@ -503,7 +503,7 @@ function getBugField(bug, field, index=0) {
     case "title":
       return (value.length <= 100) ? value : (value.substring(0, 100) +  " ...");
     case "points":
-      return (value !== null) ? value : "-";
+      return (value !== null) ? value : "";
     case "priority":
       return (value !== null) ? value : "-";
     case "index":
