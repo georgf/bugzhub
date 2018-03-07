@@ -35,6 +35,7 @@ let teamEmails = [
   "flyinggrub@gmail.com",
   "kustiuzhanina@mozilla.com",
   "alexrs95@gmail.com",
+  "jrediger@mozilla.com",
 ];
 
 const tmoGithubProjects = [
