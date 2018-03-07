@@ -187,35 +187,6 @@ let bugLists = new Map([
         ],
       }
     ],
-    ["potentials (p2), tmo",
-      {
-        columns: ["assignee", "points", "title", "project", "whiteboard"],
-        searches: [
-          ... tmoGithubProjects.map(p => ({
-            search: {
-              type: "githubRepo",
-              user: p.user,
-              project: p.project,
-            },
-            filters: {
-              priority: 2,
-              open: true,
-            },
-          })),
-          ... tmoBugzillaProjects.map(p => ({
-            search: {
-              type: "bugzillaComponent",
-              product: p.product,
-              component: p.component,
-            },
-            filters: {
-              priority: 2,
-              open: true,
-            },
-          })),
-        ],
-      }
-    ],
     ["mentored wip", {
       columns: ["assignee", "title", "project", "whiteboard"],
       searches: [
