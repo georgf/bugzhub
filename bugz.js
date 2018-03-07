@@ -106,6 +106,9 @@ async function loadIssuesFromGithubRepo(searchParams) {
 
     let labelNames = is.labels.map(l => l.name);
     data.labels = labelNames;
+    if ("pull_request" in is) {
+      data.labels.push("pr");
+    }
 
     let priorityLabel = labelNames.find(l => l.match(/^priority:[0-9]$/));
     if (priorityLabel) {
