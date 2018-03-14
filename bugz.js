@@ -239,6 +239,9 @@ function filterBugs(bugs, searchParams) {
   if ("customFilter" in filters) {
     bugs = bugs.filter(b => filters.customFilter(b));
   }
+  if ("assignees" in filters) {
+    bugs = bugs.filter(b => filters.assignees.includes(b.assignee));
+  }
 
   return bugs;
 }
