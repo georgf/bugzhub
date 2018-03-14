@@ -111,6 +111,8 @@ async function loadIssuesFromGithubRepo(searchParams) {
 
     if (is.assignee) {
       data.assignee = is.assignee.login;
+    } else if (data.isPullRequest) {
+      data.assignee = is.user.login;
     }
 
     let labelNames = is.labels.map(l => l.name);
