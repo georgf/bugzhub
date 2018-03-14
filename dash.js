@@ -421,6 +421,7 @@ function alias(email) {
     ["flyinggrub@gmail.com", "flyingrub"],
     ["kustiuzhanina@mozilla.com", "kate"],
     ["alexrs95@gmail.com", "alejandro"],
+    ["jrediger@mozilla.com", "jan-erik"],
     ["nobody@mozilla.org", "-"],
     [null, ""],
   ]);
