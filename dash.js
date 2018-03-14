@@ -457,11 +457,20 @@ function getWhiteboardHtml(value) {
   return elems;
 }
 
+function getAssigneeHtml(bug, value) {
+  if (!bug.isAssigned && bug.whiteboard.includes("[assigned]")) {
+    let italic = document.createElement("i");
+    italic.appendChild(document.createTextNode("assigned"));
+    return [italic];
+  }
+  return alias(value);
+}
+
 function getBugField(bug, field, index=0) {
   let value = bug[field];
   switch (field) {
     case "assignee":
-      return alias(value);
+      return getAssigneeHtml(bug, value);
     case "whiteboard":
       return getWhiteboardHtml(value);
     case "title":
