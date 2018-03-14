@@ -37,6 +37,12 @@ let teamEmails = [
   "alexrs95@gmail.com",
   "jrediger@mozilla.com",
 ];
+let teamGithubNames = [
+  "georgf",
+  "chutten",
+  "badboy",
+  "Dexterp37",
+];
 
 const tmoGithubProjects = [
   {
@@ -99,7 +105,8 @@ let bugLists = new Map([
    * Currently active bugs for client team.
    *************************************************************************/
   ["active", new Map([
-    ["commitments (p1)",
+    ... [1, 2].map(priority => [
+      `p${priority}`,
       {
         columns: ["assignee", "points", "title", "project", "whiteboard"],
         searches: [
@@ -110,8 +117,9 @@ let bugLists = new Map([
               project: p.project,
             },
             filters: {
-              priority: 1,
+              priority: priority,
               open: true,
+              assignees: teamGithubNames,
             },
           })),
           ... tmoBugzillaProjects.map(p => ({
@@ -121,8 +129,9 @@ let bugLists = new Map([
               component: p.component,
             },
             filters: {
-              priority: 1,
+              priority: priority,
               open: true,
+              assignees: teamEmails,
             },
           })),
           ... telemetryBugzillaProjects.map(p => ({
@@ -132,7 +141,7 @@ let bugLists = new Map([
               component: p.component,
             },
             filters: {
-              priority: 1,
+              priority: priority,
               open: true,
             },
           })),
@@ -143,7 +152,7 @@ let bugLists = new Map([
               project: p.project,
             },
             filters: {
-              priority: 1,
+              priority: priority,
               open: true,
             },
           })),
@@ -153,41 +162,13 @@ let bugLists = new Map([
               assignees: teamEmails,
             },
             filters: {
-              priority: 1,
+              priority: priority,
               open: true,
             },
           }
         ],
-      }
-    ],
-    ["potentials (p2), telemetry",
-      {
-        columns: ["assignee", "points", "title", "project", "whiteboard"],
-        searches: [
-          ... telemetryBugzillaProjects.map(p => ({
-            search: {
-              type: "bugzillaComponent",
-              product: p.product,
-              component: p.component,
-            },
-            filters: {
-              priority: 2,
-              open: true,
-            },
-          })),
-          {
-            search: {
-              type: "bugzillaAssignees",
-              assignees: teamEmails,
-            },
-            filters: {
-              priority: 2,
-              open: true,
-            },
-          }
-        ],
-      }
-    ],
+      },
+    ]),
     ["mentored wip", {
       columns: ["assignee", "title", "project", "whiteboard"],
       searches: [
