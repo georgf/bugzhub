@@ -165,7 +165,17 @@ let bugLists = new Map([
               priority: priority,
               open: true,
             },
-          }
+          },
+          {
+            search: {
+              type: "bugzillaWhiteboard",
+              whiteboardContent: "[measurement:client]",
+            },
+            filters: {
+              open: true,
+              priority: priority,
+            },
+          },
         ],
       },
     ]),
