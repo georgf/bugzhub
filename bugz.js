@@ -48,6 +48,10 @@ class Bug {
   get project() {
     return "";
   }
+
+  get isPullRequest() {
+    return false;
+  }
 }
 
 class GithubIssue extends Bug {
@@ -60,6 +64,10 @@ class GithubIssue extends Bug {
 
   get project() {
     return this._data.project;
+  }
+
+  get isPullRequest() {
+    return this._data.isPullRequest;
   }
 }
 
@@ -98,6 +106,7 @@ async function loadIssuesFromGithubRepo(searchParams) {
       priority: null,
       labels: null,
       project: search.project,
+      isPullRequest: ("pull_request" in is),
     };
 
     if (is.assignee) {
@@ -106,7 +115,7 @@ async function loadIssuesFromGithubRepo(searchParams) {
 
     let labelNames = is.labels.map(l => l.name);
     data.labels = labelNames;
-    if ("pull_request" in is) {
+    if (data.isPullRequest) {
       data.labels.push("pr");
     }
 
@@ -241,6 +250,9 @@ function filterBugs(bugs, searchParams) {
   }
   if ("assignees" in filters) {
     bugs = bugs.filter(b => filters.assignees.includes(b.assignee));
+  }
+  if ("isPullRequest" in filters) {
+    bugs = bugs.filter(b => b.isPullRequest == filters.isPullRequest);
   }
 
   return bugs;

@@ -329,6 +329,25 @@ let bugLists = new Map([
    * Triaged bugs for TMO team.
    *************************************************************************/
   ["tmo_triaged", new Map([
+    [
+      "tmo prs",
+      {
+        columns: ["assignee", "title", "project", "whiteboard"],
+        searches: [
+          ... tmoGithubProjects.map(p => ({
+            search: {
+              type: "githubRepo",
+              user: p.user,
+              project: p.project,
+            },
+            filters: {
+              open: true,
+              isPullRequest: true,
+            },
+          })),
+        ],
+      },
+    ],
     ... ["1", "2", "3", "4"].map(priority => [
       "tmo p" + priority,
       {
@@ -343,6 +362,7 @@ let bugLists = new Map([
             filters: {
               priority: priority,
               open: true,
+              isPullRequest: false,
             },
           })),
           ... tmoBugzillaProjects.map(p => ({
@@ -377,6 +397,7 @@ let bugLists = new Map([
           filters: {
             unprioritized: true,
             open: true,
+            isPullRequest: false,
           },
         })),
         ... tmoBugzillaProjects.map(p => ({
