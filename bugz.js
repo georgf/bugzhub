@@ -52,6 +52,10 @@ class Bug {
   get isPullRequest() {
     return false;
   }
+
+  get mentors() {
+    return [];
+  }
 }
 
 class GithubIssue extends Bug {
@@ -82,6 +86,10 @@ class BugzillaBug extends Bug {
 
   get project() {
     return this._data.component;
+  }
+
+  get mentors() {
+    return this._data.mentors;
   }
 }
 
@@ -189,6 +197,7 @@ async function loadBugsFromBugzilla(searchParams) {
     "assigned_to",
     "cf_fx_points",
     "priority",
+    "mentors",
   ].join(",");
   queryParams.include_fields = include_fields;
 
@@ -216,6 +225,7 @@ async function loadBugsFromBugzilla(searchParams) {
       labels: null,
       product: b.product,
       component: b.component,
+      mentors: b.mentors,
     };
 
     if (b.assigned_to !== "nobody@mozilla.org") {
