@@ -214,7 +214,8 @@ let bugLists = new Map([
           },
           filters: {
             open: true,
-            customFilter: bug => bug.whiteboard.includes("[qf") && !bug.whiteboard.includes("[qf-]"),
+            whiteboard: "[qf",
+            customFilter: bug => !bug.whiteboard.includes("[qf-]"),
           },
         })),
       ],

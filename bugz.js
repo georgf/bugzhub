@@ -139,7 +139,9 @@ async function loadBugsFromBugzilla(searchParams) {
   // Set up basic search type.
   switch (search.type) {
   case "bugzillaComponent":
-    queryParams.quicksearch = `product:"${search.product}" component:"${search.component}"`;
+    queryParams.product = search.product;
+    queryParams.component = search.component;
+    //queryParams.quicksearch = `product:"${search.product}" component:"${search.component}"`;
     break;
   case "bugzillaAssignees":
     queryParams.quicksearch = `assigned_to:${search.assignees.join(',')}`;
@@ -171,6 +173,9 @@ async function loadBugsFromBugzilla(searchParams) {
       queryParams.emailtype2 = filters.isAssigned ? "notequals" : "equals";
       queryParams.email2 = "nobody@mozilla.org";
       queryParams.emailassigned_to2 = "1";
+    }
+    if ("whiteboard" in filters) {
+      queryParams.whiteboard = filters.whiteboard;
     }
   }
 
