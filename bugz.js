@@ -179,6 +179,19 @@ async function loadBugsFromBugzilla(searchParams) {
     }
   }
 
+  // We don't want _all_ the fields.
+  const include_fields = [
+    "id",
+    "summary",
+    "whiteboard",
+    "product",
+    "component",
+    "assigned_to",
+    "cf_fx_points",
+    "priority",
+    ].join(",");
+  queryParams.include_fields = include_fields;
+
   let bugs = await new Promise((resolve, reject) => {
     bugzilla.searchBugs(queryParams, (error, bugs) => {
       if (error) {
