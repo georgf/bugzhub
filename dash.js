@@ -180,7 +180,7 @@ let bugLists = new Map([
       },
     ]),
     ["mentored wip", {
-      columns: ["assignee", "title", "project", "whiteboard"],
+      columns: ["assignee", "title", "project", "whiteboard", "mentors"],
       searches: [
         {
           search: {
@@ -261,7 +261,7 @@ let bugLists = new Map([
    *************************************************************************/
   ["mentored", new Map([
     ["mentored wip", {
-      columns: ["assignee", "title", "whiteboard"],
+      columns: ["assignee", "title", "whiteboard", "mentors"],
       searches: [
         {
           search: {
@@ -276,7 +276,7 @@ let bugLists = new Map([
       ],
     }],
     ["mentored free", {
-      columns: ["title", "whiteboard"],
+      columns: ["title", "whiteboard", "mentors"],
       searches: [
         {
           search: {
@@ -503,6 +503,8 @@ function getBugField(bug, field, index=0) {
       return (value !== null) ? value : "-";
     case "index":
       return index;
+    case "mentors":
+      return value.map(alias).join(", ");
     default:
       return value;
   }
