@@ -189,7 +189,7 @@ async function loadBugsFromBugzilla(searchParams) {
     "assigned_to",
     "cf_fx_points",
     "priority",
-    ].join(",");
+  ].join(",");
   queryParams.include_fields = include_fields;
 
   let bugs = await new Promise((resolve, reject) => {
