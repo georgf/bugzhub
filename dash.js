@@ -415,6 +415,48 @@ let bugLists = new Map([
       ],
     }]
   ])],
+
+  /**************************************************************************
+   * Triaged bugs for Data Platform team.
+   *************************************************************************/
+  ["dataplatform_triaged", new Map([
+    ["dataplatform triaged", {
+      columns: ["assignee", "title", "project", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaWhiteboard",
+            whiteboardContent: "[DataPlatform]",
+          },
+          filters: {
+            unprioritized: false,
+            open: true,
+          },
+        },
+      ],
+    }]
+  ])],
+
+  /**************************************************************************
+   * Untriaged bugs for Data Platform team.
+   *************************************************************************/
+  ["dataplatform_untriaged", new Map([
+    ["dataplatform untriaged", {
+      columns: ["assignee", "title", "project", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaWhiteboard",
+            whiteboardContent: "[DataPlatform]",
+          },
+          filters: {
+            unprioritized: true,
+            open: true,
+          },
+        },
+      ],
+    }]
+  ])],
 ]);
 
 var MS_IN_A_DAY = 24 * 60 * 60 * 1000;
