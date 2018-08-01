@@ -419,8 +419,9 @@ let bugLists = new Map([
   /**************************************************************************
    * Triaged bugs for Data Platform team.
    *************************************************************************/
-  ["dataplatform_triaged", new Map([
-    ["dataplatform triaged", {
+  ["dataplatform_triaged", new Map([1, 2].map(priority => [
+    `p${priority}`,
+    {
       columns: ["assignee", "title", "project", "whiteboard"],
       searches: [
         {
@@ -429,13 +430,13 @@ let bugLists = new Map([
             whiteboardContent: "[DataPlatform]",
           },
           filters: {
-            unprioritized: false,
+            priority: priority,
             open: true,
           },
         },
       ],
-    }]
-  ])],
+    }
+  ]))],
 
   /**************************************************************************
    * Untriaged bugs for Data Platform team.
@@ -457,6 +458,28 @@ let bugLists = new Map([
       ],
     }]
   ])],
+
+  /**************************************************************************
+   * Backlog bugs for Data Platform team.
+   *************************************************************************/
+  ["dataplatform_backlog", new Map([3, 4, 5].map(priority => [
+    `p${priority}`,
+    {
+      columns: ["assignee", "title", "project", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaWhiteboard",
+            whiteboardContent: "[DataPlatform]",
+          },
+          filters: {
+            priority: priority,
+            open: true,
+          },
+        },
+      ],
+    }
+  ]))],
 ]);
 
 var MS_IN_A_DAY = 24 * 60 * 60 * 1000;
