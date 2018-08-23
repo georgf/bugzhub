@@ -105,6 +105,22 @@ let bugLists = new Map([
    * Currently active bugs for client team.
    *************************************************************************/
   ["active", new Map([
+    ["active projects", {
+      columns: ["assignee", "title", "project", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaWhiteboard",
+            whiteboardContent: "[measurement:client:project]",
+          },
+          filters: {
+            open: true,
+            isAssigned: true,
+          },
+        },
+      ],
+    }],
+
     ... [1, 2].map(priority => [
       `p${priority}`,
       {
@@ -220,20 +236,6 @@ let bugLists = new Map([
         })),
       ],
     }],
-    ["projects", {
-      columns: ["assignee", "title", "project", "whiteboard"],
-      searches: [
-        {
-          search: {
-            type: "bugzillaWhiteboard",
-            whiteboardContent: "[measurement:client:project]",
-          },
-          filters: {
-            open: true,
-          },
-        },
-      ],
-    }],
   ])],
 
   /**************************************************************************
@@ -255,6 +257,23 @@ let bugLists = new Map([
       })),
     }],
   ])]),
+
+  ["projects", new Map([
+    ["projects", {
+      columns: ["assignee", "title", "project", "whiteboard"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaWhiteboard",
+            whiteboardContent: "[measurement:client:project]",
+          },
+          filters: {
+            open: true,
+          },
+        },
+      ],
+    }],
+  ])],
 
   /**************************************************************************
    * Mentored bugs for client team.
