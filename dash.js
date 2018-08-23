@@ -106,7 +106,7 @@ let bugLists = new Map([
    *************************************************************************/
   ["active", new Map([
     ["active projects", {
-      columns: ["assignee", "title", "project", "whiteboard"],
+      columns: ["assignee", "title"],
       searches: [
         {
           search: {
