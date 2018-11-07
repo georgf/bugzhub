@@ -276,6 +276,30 @@ let bugLists = new Map([
   ])],
 
   /**************************************************************************
+   * Glean bugs.
+   *************************************************************************/
+  ["fxt_glean", new Map([
+    ... [1, 2, 3, 4, 5].map(milestone => [`milestone ${milestone}`,
+      {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Toolkit",
+              component: "Telemetry",
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:mobilesdk:m${milestone}]`,
+            },
+          },
+        ],
+      },
+    ]),
+  ])],
+
+  /**************************************************************************
    * Mentored bugs for client team.
    *************************************************************************/
   ["fxt_mentored", new Map([
