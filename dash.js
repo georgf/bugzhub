@@ -104,7 +104,7 @@ let bugLists = new Map([
   /**************************************************************************
    * Currently active bugs for client team.
    *************************************************************************/
-  ["active", new Map([
+  ["fxt_active", new Map([
     ["active projects", {
       columns: ["assignee", "title"],
       searches: [
@@ -241,7 +241,7 @@ let bugLists = new Map([
   /**************************************************************************
    * p3, p4, p5 categories for client team.
    *************************************************************************/
-  ... [3, 4, 5].map(priority => ["p" + priority, new Map([
+  ... [3, 4, 5].map(priority => ["fxt_p" + priority, new Map([
     ["p" + priority, {
       columns: ["assignee", "title", "whiteboard"],
       searches: telemetryBugzillaProjects.map(p => ({
@@ -258,7 +258,7 @@ let bugLists = new Map([
     }],
   ])]),
 
-  ["projects", new Map([
+  ["fxt_projects", new Map([
     ["projects", {
       columns: ["assignee", "title", "project", "whiteboard"],
       searches: [
@@ -278,7 +278,7 @@ let bugLists = new Map([
   /**************************************************************************
    * Mentored bugs for client team.
    *************************************************************************/
-  ["mentored", new Map([
+  ["fxt_mentored", new Map([
     ["mentored wip", {
       columns: ["assignee", "title", "whiteboard", "mentors"],
       searches: [
@@ -314,7 +314,7 @@ let bugLists = new Map([
   /**************************************************************************
    * Untriaged bugs for client team.
    *************************************************************************/
-  ["untriaged", new Map([
+  ["fxt_untriaged", new Map([
     ["untriaged, telemetry",
       {
         columns: ["assignee", "title", "project", "whiteboard"],
