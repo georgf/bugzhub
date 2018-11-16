@@ -279,7 +279,7 @@ let bugLists = new Map([
    * Glean bugs.
    *************************************************************************/
   ["glean", new Map([
-    ... [1, 2, 3, 4, 5].map(milestone => [`milestone ${milestone}`,
+    ... [1, 2, 3, 4, 5, "?"].map(milestone => [`milestone ${milestone}`,
       {
         columns: ["assignee", "title", "whiteboard"],
         searches: [
