@@ -96,6 +96,16 @@ const telemetryGithubProjects = [
   }
 ];
 
+const gleanMilestones = [
+  [1, "basic structure"],
+  [2, "stubbed baseline ping"],
+  [3, "complete baseline ping"],
+  [4, "metrics ping?"],
+  [5, "geckoview integration?"],
+  [6, "events ping?"],
+  ["?", "backlog"],
+];
+
 let bugLists = new Map([
   // TODO:
   // - query recent bugs as "recent".
@@ -279,7 +289,7 @@ let bugLists = new Map([
    * Glean bugs.
    *************************************************************************/
   ["glean", new Map([
-    ... [1, 2, 3, 4, 5, "?"].map(milestone => [`milestone ${milestone}`,
+    ... gleanMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
       {
         columns: ["assignee", "title", "whiteboard"],
         searches: [
@@ -291,7 +301,7 @@ let bugLists = new Map([
             },
             filters: {
               open: true,
-              whiteboard: `[telemetry:mobilesdk:m${milestone}]`,
+              whiteboard: `[telemetry:mobilesdk:m${milestone[0]}]`,
             },
           },
         ],
