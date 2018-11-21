@@ -56,6 +56,10 @@ class Bug {
   get mentors() {
     return [];
   }
+
+  get resolution() {
+    return "";
+  }
 }
 
 class GithubIssue extends Bug {
@@ -90,6 +94,10 @@ class BugzillaBug extends Bug {
 
   get mentors() {
     return this._data.mentors;
+  }
+
+  get resolution() {
+    return this._data.resolution;
   }
 }
 
@@ -175,6 +183,13 @@ async function loadBugsFromBugzilla(searchParams) {
     if ("open" in filters) {
       if (filters.open) {
         queryParams.resolution = "---";
+      } else {
+        queryParams.resolution = ["FIXED",
+                                  "INVALID",
+                                  "WONTFIX",
+                                  "DUPLICATE",
+                                  "WORKSFORME",
+                                  "INCOMPLETE"];
       }
     }
     if ("isAssigned" in filters) {
@@ -184,6 +199,9 @@ async function loadBugsFromBugzilla(searchParams) {
     }
     if ("whiteboard" in filters) {
       queryParams.whiteboard = filters.whiteboard;
+    }
+    if ("lastChangeTime" in filters) {
+      queryParams.last_change_time = filters.lastChangeTime.toISOString();
     }
   }
 
@@ -198,6 +216,7 @@ async function loadBugsFromBugzilla(searchParams) {
     "cf_fx_points",
     "priority",
     "mentors",
+    "resolution",
   ].join(",");
   queryParams.include_fields = include_fields;
 
@@ -226,6 +245,7 @@ async function loadBugsFromBugzilla(searchParams) {
       product: b.product,
       component: b.component,
       mentors: b.mentors,
+      resolution: b.resolution,
     };
 
     if (b.assigned_to !== "nobody@mozilla.org") {
