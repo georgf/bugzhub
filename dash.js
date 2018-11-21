@@ -246,6 +246,32 @@ let bugLists = new Map([
         })),
       ],
     }],
+    ["recently closed", {
+      columns: ["assignee", "title", "project", "resolution"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaWhiteboard",
+            whiteboardContent: "[measurement:client:tracking]",
+          },
+          filters: {
+            open: false,
+            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+          },
+        },
+        ... telemetryBugzillaProjects.map(p => ({
+          search: {
+            type: "bugzillaComponent",
+            product: p.product,
+            component: p.component,
+          },
+          filters: {
+            open: false,
+            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+          },
+        })),
+      ],
+    }],
   ])],
 
   /**************************************************************************
