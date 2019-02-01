@@ -100,9 +100,12 @@ const gleanMilestones = [
   [1, "basic structure"],
   [2, "stubbed baseline ping"],
   [3, "complete baseline ping"],
-  [4, "metrics ping?"],
-  [5, "geckoview integration?"],
-  [6, "events ping?"],
+  [4, "metrics ping"],
+  [5, "testing & integration"],
+  [6, "ping data validation"],
+  [7, "Fenix metrics support"],
+  [8, "Fenix testing support"],
+  [9, "Fenix end to end testing support"],
   ["?", "backlog"],
 ];
 
