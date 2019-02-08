@@ -97,16 +97,17 @@ const telemetryGithubProjects = [
 ];
 
 const gleanMilestones = [
-  [1, "basic structure"],
-  [2, "stubbed baseline ping"],
-  [3, "complete baseline ping"],
-  [4, "metrics ping"],
-  [5, "testing & integration"],
-  [6, "ping data validation"],
-  [7, "Fenix metrics support"],
-  [8, "Fenix testing support"],
-  [9, "Fenix end to end testing support"],
-  ["?", "backlog"],
+  ["m1", "basic structure"],
+  ["m2", "stubbed baseline ping"],
+  ["m3", "complete baseline ping"],
+  ["m4", "metrics ping"],
+  ["m5", "testing & integration"],
+  ["m6", "ping data validation"],
+  ["m7", "Fenix metrics support"],
+  ["m8", "Fenix testing support"],
+  ["m9", "Fenix end to end testing support"],
+  ["m?", "incoming"],
+  ["backlog", "backlog"],
 ];
 
 let bugLists = new Map([
@@ -330,7 +331,7 @@ let bugLists = new Map([
             },
             filters: {
               open: true,
-              whiteboard: `[telemetry:mobilesdk:m${milestone[0]}]`,
+              whiteboard: `[telemetry:mobilesdk:${milestone[0]}]`,
             },
           },
         ],
