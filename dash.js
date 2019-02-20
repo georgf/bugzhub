@@ -337,6 +337,23 @@ let bugLists = new Map([
         ],
       },
     ]),
+    ["recently closed", {
+      columns: ["assignee", "title", "resolution"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaComponent",
+            product: "Toolkit",
+            component: "Telemetry",
+          },
+          filters: {
+            open: false,
+            whiteboard: `[telemetry:mobilesdk:`,
+            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+          },
+        },
+      ],
+    }],
   ])],
 
   /**************************************************************************
