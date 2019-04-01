@@ -106,6 +106,7 @@ const gleanMilestones = [
   ["m7", "Fenix metrics support"],
   ["m8", "Fenix testing support"],
   ["m9", "Fenix end to end testing support"],
+  ["m12", "Run tests of glean and experiments"],
   ["m?", "incoming"],
   ["backlog", "backlog"],
 ];
