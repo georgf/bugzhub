@@ -337,6 +337,17 @@ let bugLists = new Map([
               whiteboard: `[telemetry:mobilesdk:${milestone[0]}]`,
             },
           },
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean: SDK",
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:mobilesdk:${milestone[0]}]`,
+            },
+          }
         ],
       },
     ]),
