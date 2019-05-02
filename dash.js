@@ -109,7 +109,6 @@ const gleanMilestones = [
   ["m10", "Glean / Experiments live data validation"],
   ["m11", "Data validation and hotfixes"],
   ["m12", "Buffer / Future work"],
-  ["m?", "incoming"],
   ["backlog", "backlog"],
 ];
 
@@ -351,6 +350,46 @@ let bugLists = new Map([
         ],
       },
     ]),
+    ["milestone m?: incoming",
+      {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Toolkit",
+              component: "Telemetry",
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:mobilesdk:m?]`,
+            },
+          },
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean: SDK",
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:mobilesdk:m?]`,
+            },
+          },
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean: SDK",
+            },
+            filters: {
+              open: true,
+              customFilter: bug => !bug.hasPriority,
+            },
+          }
+        ],
+      },
+    ],
     ["recently closed", {
       columns: ["assignee", "title", "resolution"],
       searches: [
