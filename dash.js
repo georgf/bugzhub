@@ -86,6 +86,10 @@ const telemetryBugzillaProjects = [
   {
     product: "Toolkit",
     component: "Telemetry",
+  },
+  {
+    product: "Data Platform and Tools",
+    component: "Glean: SDK",
   }
 ];
 
