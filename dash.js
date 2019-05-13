@@ -100,19 +100,26 @@ const telemetryGithubProjects = [
   }
 ];
 
-const gleanMilestones = [
-  ["m1", "basic structure"],
-  ["m2", "stubbed baseline ping"],
-  ["m3", "complete baseline ping"],
-  ["m4", "metrics ping"],
-  ["m5", "testing & integration"],
-  ["m6", "ping data validation"],
+// Milestones for the glean-ac (the initial implementation living in android-components)
+const gleanAcMilestones = [
   ["m7", "Fenix metrics support / Experiments library"],
   ["m8", "Custom ping work & finalize experiments library"],
   ["m9", "Fenix testing support"],
   ["m10", "Glean / Experiments live data validation"],
   ["m11", "Data validation and hotfixes"],
   ["m12", "Buffer / Future work"],
+  ["backlog", "backlog"],
+];
+
+// Milestones for glean (includes glean-core)
+const gleanMilestones = [
+  ["m1", "Preliminary work"],
+  ["m2", "Workweek"],
+  ["m3", "Core foundations"],
+  ["m4", "Integration prototype"],
+  ["m5", "Non-mocked baseline ping"],
+  ["m6", "Other pings"],
+  ["m7", "Buffer / Future work"],
   ["backlog", "backlog"],
 ];
 
@@ -322,10 +329,10 @@ let bugLists = new Map([
   ])],
 
   /**************************************************************************
-   * Glean bugs.
+   * Glean-ac bugs.
    *************************************************************************/
-  ["glean", new Map([
-    ... gleanMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
+  ["glean-ac", new Map([
+    ... gleanAcMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
       {
         columns: ["assignee", "title", "whiteboard"],
         searches: [
@@ -406,6 +413,76 @@ let bugLists = new Map([
           filters: {
             open: false,
             whiteboard: `[telemetry:mobilesdk:`,
+            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+          },
+        },
+      ],
+    }],
+  ])],
+
+  /**************************************************************************
+   * Glean bugs.
+   *************************************************************************/
+  ["glean", new Map([
+    ... gleanMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
+      {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean: SDK",
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:glean-rs:${milestone[0]}]`,
+            },
+          }
+        ],
+      },
+    ]),
+    ["milestone m?: incoming",
+      {
+        columns: ["assignee", "title", "whiteboard"],
+        searches: [
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean: SDK",
+            },
+            filters: {
+              open: true,
+              whiteboard: `[telemetry:glean-rs:m?]`,
+            },
+          },
+          {
+            search: {
+              type: "bugzillaComponent",
+              product: "Data Platform and Tools",
+              component: "Glean: SDK",
+            },
+            filters: {
+              open: true,
+              customFilter: bug => !bug.hasPriority,
+            },
+          }
+        ],
+      },
+    ],
+    ["recently closed", {
+      columns: ["assignee", "title", "resolution"],
+      searches: [
+        {
+          search: {
+            type: "bugzillaComponent",
+            product: "Data Platform and Tools",
+            component: "Glean: SDK",
+          },
+          filters: {
+            open: false,
+            whiteboard: `[telemetry:glean-rs:`,
             lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
           },
         },
