@@ -456,17 +456,6 @@ let bugLists = new Map([
               open: true,
               whiteboard: `[telemetry:glean-rs:m?]`,
             },
-          },
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Data Platform and Tools",
-              component: "Glean: SDK",
-            },
-            filters: {
-              open: true,
-              customFilter: bug => !bug.hasPriority,
-            },
           }
         ],
       },
