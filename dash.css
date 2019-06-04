@@ -62,6 +62,7 @@ h1 {
   border-color: #909090;
   color: #505050;
   cursor: pointer;
+  white-space: nowrap;
 }
 
 #categories label.active {
