@@ -113,13 +113,11 @@ const gleanAcMilestones = [
 
 // Milestones for glean (includes glean-core)
 const gleanMilestones = [
-  ["m1", "Preliminary work"],
-  ["m2", "Workweek"],
-  ["m3", "Core foundations"],
-  ["m4", "Integration prototype"],
   ["m5", "Non-mocked baseline ping"],
-  ["m6", "Other pings"],
-  ["m7", "Buffer / Future work"],
+  ["m6", "Metric types parity in glean-core - GV planning"],
+  ["m7", "glean-core feature parity - GV implementation"],
+  ["m8", "Buffer week (tech debt)"],
+  ["m9", "Fenix integration - iOS"],
   ["backlog", "backlog"],
 ];
 
