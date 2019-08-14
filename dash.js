@@ -36,12 +36,14 @@ let teamEmails = [
   "kustiuzhanina@mozilla.com",
   "alexrs95@gmail.com",
   "jrediger@mozilla.com",
+  "tlong@mozilla.com"
 ];
 let teamGithubNames = [
   "georgf",
   "chutten",
   "badboy",
   "Dexterp37",
+  "travis79"
 ];
 
 const tmoGithubProjects = [
@@ -102,13 +104,7 @@ const telemetryGithubProjects = [
 
 // Milestones for the glean-ac (the initial implementation living in android-components)
 const gleanAcMilestones = [
-  ["m7", "Fenix metrics support / Experiments library"],
-  ["m8", "Custom ping work & finalize experiments library"],
-  ["m9", "Fenix testing support"],
-  ["m10", "Glean / Experiments live data validation"],
-  ["m11", "Data validation and hotfixes"],
-  ["m12", "Buffer / Future work"],
-  ["backlog", "backlog"],
+  ["m9", "Remaining Glean-AC Issues"],
 ];
 
 // Milestones for glean (includes glean-core)
@@ -407,6 +403,18 @@ let bugLists = new Map([
             type: "bugzillaComponent",
             product: "Toolkit",
             component: "Telemetry",
+          },
+          filters: {
+            open: false,
+            whiteboard: `[telemetry:mobilesdk:`,
+            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
+          },
+        },
+        {
+          search: {
+            type: "bugzillaComponent",
+            product: "Data Platform and Tools",
+            component: "Glean: SDK",
           },
           filters: {
             open: false,
