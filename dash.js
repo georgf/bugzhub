@@ -114,6 +114,7 @@ const gleanMilestones = [
   ["m7", "glean-core feature parity - GV implementation"],
   ["m8", "Buffer week (tech debt)"],
   ["m9", "Fenix integration - iOS"],
+  ["m10", "Shipping a release - Android"],
   ["backlog", "backlog"],
 ];
 
