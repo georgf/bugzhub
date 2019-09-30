@@ -115,6 +115,7 @@ const gleanMilestones = [
   ["m8", "Buffer week (tech debt)"],
   ["m9", "Fenix integration - iOS"],
   ["m10", "Shipping a release - Android"],
+  ["m11", "Glean going forward"],
   ["backlog", "backlog"],
 ];
 
