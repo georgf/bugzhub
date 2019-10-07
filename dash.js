@@ -116,6 +116,7 @@ const gleanMilestones = [
   ["m9", "Fenix integration - iOS"],
   ["m10", "Shipping a release - Android"],
   ["m11", "Glean going forward"],
+  ["m12", "Glean on iOS - Phase 5 - Feature Parity"],
   ["backlog", "backlog"],
 ];
 
