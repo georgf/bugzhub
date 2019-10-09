@@ -36,14 +36,16 @@ let teamEmails = [
   "kustiuzhanina@mozilla.com",
   "alexrs95@gmail.com",
   "jrediger@mozilla.com",
-  "tlong@mozilla.com"
+  "tlong@mozilla.com",
+  "brizental@mozilla.com"
 ];
 let teamGithubNames = [
   "georgf",
   "chutten",
   "badboy",
   "Dexterp37",
-  "travis79"
+  "travis79",
+  "brizental"
 ];
 
 const tmoGithubProjects = [
