@@ -104,18 +104,8 @@ const telemetryGithubProjects = [
   }
 ];
 
-// Milestones for the glean-ac (the initial implementation living in android-components)
-const gleanAcMilestones = [
-  ["m9", "Remaining Glean-AC Issues"],
-];
-
 // Milestones for glean (includes glean-core)
 const gleanMilestones = [
-  ["m5", "Non-mocked baseline ping"],
-  ["m6", "Metric types parity in glean-core - GV planning"],
-  ["m7", "glean-core feature parity - GV implementation"],
-  ["m8", "Buffer week (tech debt)"],
-  ["m9", "Fenix integration - iOS"],
   ["m10", "Shipping a release - Android"],
   ["m11", "Glean going forward"],
   ["m12", "Glean on iOS - Phase 5 - Feature Parity"],
@@ -322,110 +312,6 @@ let bugLists = new Map([
           },
           filters: {
             open: true,
-          },
-        },
-      ],
-    }],
-  ])],
-
-  /**************************************************************************
-   * Glean-ac bugs.
-   *************************************************************************/
-  ["glean-ac", new Map([
-    ... gleanAcMilestones.map(milestone => [`milestone ${milestone[0]}: ${milestone[1]}`,
-      {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Toolkit",
-              component: "Telemetry",
-            },
-            filters: {
-              open: true,
-              whiteboard: `[telemetry:mobilesdk:${milestone[0]}]`,
-            },
-          },
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Data Platform and Tools",
-              component: "Glean: SDK",
-            },
-            filters: {
-              open: true,
-              whiteboard: `[telemetry:mobilesdk:${milestone[0]}]`,
-            },
-          }
-        ],
-      },
-    ]),
-    ["milestone m?: incoming",
-      {
-        columns: ["assignee", "title", "whiteboard"],
-        searches: [
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Toolkit",
-              component: "Telemetry",
-            },
-            filters: {
-              open: true,
-              whiteboard: `[telemetry:mobilesdk:m?]`,
-            },
-          },
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Data Platform and Tools",
-              component: "Glean: SDK",
-            },
-            filters: {
-              open: true,
-              whiteboard: `[telemetry:mobilesdk:m?]`,
-            },
-          },
-          {
-            search: {
-              type: "bugzillaComponent",
-              product: "Data Platform and Tools",
-              component: "Glean: SDK",
-            },
-            filters: {
-              open: true,
-              customFilter: bug => !bug.hasPriority,
-            },
-          }
-        ],
-      },
-    ],
-    ["recently closed", {
-      columns: ["assignee", "title", "resolution"],
-      searches: [
-        {
-          search: {
-            type: "bugzillaComponent",
-            product: "Toolkit",
-            component: "Telemetry",
-          },
-          filters: {
-            open: false,
-            whiteboard: `[telemetry:mobilesdk:`,
-            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
-          },
-        },
-        {
-          search: {
-            type: "bugzillaComponent",
-            product: "Data Platform and Tools",
-            component: "Glean: SDK",
-          },
-          filters: {
-            open: false,
-            whiteboard: `[telemetry:mobilesdk:`,
-            lastChangeTime: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000),
           },
         },
       ],
