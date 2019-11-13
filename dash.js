@@ -110,6 +110,7 @@ const gleanMilestones = [
   ["m11", "Glean going forward"],
   ["m12", "Glean on iOS - Phase 5 - Feature Parity"],
   ["m13", "Glean Python bindings MVP"],
+  ["m14", "Lockwise Integration (iOS/Android)"],
   ["backlog", "backlog"],
 ];
 
