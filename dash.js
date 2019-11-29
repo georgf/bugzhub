@@ -106,11 +106,11 @@ const telemetryGithubProjects = [
 
 // Milestones for glean (includes glean-core)
 const gleanMilestones = [
-  ["m10", "Shipping a release - Android"],
   ["m11", "Glean going forward"],
   ["m12", "Glean on iOS - Phase 5 - Feature Parity"],
   ["m13", "Glean Python bindings MVP"],
   ["m14", "Lockwise Integration (iOS/Android)"],
+  ["m15", "Project FOG"],
   ["backlog", "backlog"],
 ];
 
